@@ -2,6 +2,7 @@
 @using System.Net.Http.Headers
 @using Newtonsoft.Json
 @using AIMAppForAPI.Model
+@using Microsoft.AspNetCore.Components.QuickGrid
 
 
 
@@ -15,15 +16,21 @@
 <h3>Product List</h3>
 
 
-Product List count=@PoductListCount
+
+
+
+
 
 @if (@productList == null)
 {
     <p><em>Loading ......</em></p>
+
+    
 }
 else
 {
-    <table class="table">
+    
+    @* <table class="table">
         <thead>
             <tr>
                 <th>Created At</th>
@@ -40,13 +47,23 @@ else
                     <td>@product.createdAt</td>
                     <td>@product.description</td>
                     <td>@product.price</td>
-                    <td>@product.sku</td>
+                    <td class="wrapped-text">@product.sku</td>
                     <td>@product.updatedAt</td>
                 </tr>
             }
         </tbody>
-    </table>
+    </table> *@
+    <h3>Product List count = @PoductListCount</h3>
+    <QuickGrid Items="productList.AsQueryable()">
+        <PropertyColumn Property="@(p => p.createdAt)" Sortable="true" Align="Align.Center" />
+        <PropertyColumn Property="@(p => p.description)" Sortable="true" Align="Align.Center" />
+        <PropertyColumn Property="@(p => p.price)" Sortable="true" Align="Align.Center" />
+        <PropertyColumn Property="@(p => p.sku)" Sortable="true" Align="Align.Center" Class="flexi-grid" />
+        <PropertyColumn Property="@(p => p.updatedAt)" Sortable="true" Align="Align.Center" />
+
+    </QuickGrid>
 }
+
 
 
 @code{
